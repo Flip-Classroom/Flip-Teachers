@@ -358,7 +358,7 @@ export const resolvers = {
         });
         const inputVal = {
           to_email: val.email,
-          message: `https://localhost:3000/auth/changepassword/${val.id}`,
+          message: `https://development.dbetgujmgmk5n.amplifyapp.com/auth/changepassword/${val.id}`,
           type: "new_password",
         };
         sendEmail(inputVal);
