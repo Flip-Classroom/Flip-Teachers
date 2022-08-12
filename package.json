@@ -24,6 +24,7 @@
     "googleapis": "^105.0.0",
     "graphql": "^16.5.0",
     "jsonwebtoken": "^8.5.1",
+    "micro": "^9.4.1",
     "micro-cors": "^0.1.1",
     "moment": "^2.29.4",
     "next": "12.2.2",
