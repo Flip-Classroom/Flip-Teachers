@@ -52,9 +52,6 @@ function Deleteclass() {
     ],
   });
 
-  if (loading) console.log("Creating...");
-  if (error) console.log("error", JSON.stringify(error, null, 2));
-
   const inputVal = {
     id: classcoursedata.classId,
   };

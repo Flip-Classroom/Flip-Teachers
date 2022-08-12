@@ -33,9 +33,6 @@ function Newcourse() {
     ],
   });
 
-  if (loading) console.log("Creating...");
-  if (error) console.log(JSON.stringify(error, null, 2));
-
   const inputVal = {
     course: coursename,
     classId: classcoursedata.classId,

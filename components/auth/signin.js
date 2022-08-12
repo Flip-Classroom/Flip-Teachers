@@ -52,7 +52,6 @@ function Signin() {
   };
 
   const signin = async () => {
-    console.log(process.env.NEXT_PUBLIC_JWT_COOKIE_TOKEN);
     const inputVal = {
       email,
       password,

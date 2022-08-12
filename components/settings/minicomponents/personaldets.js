@@ -55,9 +55,6 @@ function Personaldets() {
   if (init_loading) {
     val = "...";
   }
-  if (init_error) {
-    console.log(JSON.stringify(error, null, 2));
-  }
 
   const [updateTeacherProfile, { data, loading, error }] = useMutation(
     UpdateTeacherProfile,
@@ -71,9 +68,6 @@ function Personaldets() {
       ],
     }
   );
-
-  if (loading) console.log("Updating...");
-  if (error) console.log(JSON.stringify(error, null, 2));
 
   const update_teacher_profile = () => {
     const inputVal = {

@@ -108,8 +108,6 @@ function Editor({ edit_content }) {
     }
   );
 
-  if (error) console.log(JSON.stringify(error, null, 2));
-
   const inputVal = {
     id: creatednoteid,
     authorId: teacherid,

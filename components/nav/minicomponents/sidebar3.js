@@ -50,12 +50,8 @@ function Sidebar3() {
       if (loading) {
         setNotes([{ topic: "...", id: "..." }]);
       }
-      if (error) {
-        console.log(JSON.stringify(error, null, 2));
-      }
       if (data && data.notes.length > 0) {
         setNotes(data.notes);
-        console.log("data", data.notes);
       } else if (data && data.notes.length <= 0) {
         setNotes([
           {

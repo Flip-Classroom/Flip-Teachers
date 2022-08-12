@@ -7,7 +7,7 @@ import prisma from "../../lib/prismaClient";
 const cors = Cors({
   origin:
     process.env.NODE_ENV === "production"
-      ? "https://development.dbetgujmgmk5n.amplifyapp.com"
+      ? "https://development.d1xd4iavh4tuet.amplifyapp.com"
       : "https://studio.apollographql.com",
   credentials: true,
 });

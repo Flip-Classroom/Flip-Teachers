@@ -62,12 +62,8 @@ function Sidenav3() {
       if (loading) {
         setNotes([{ topic: "...", id: "..." }]);
       }
-      if (error) {
-        console.log(JSON.stringify(error, null, 2));
-      }
       if (data && data.notes.length > 0) {
         setNotes(data.notes);
-        console.log("data", data.notes);
       } else if (data && data.notes.length <= 0) {
         setNotes([
           {
@@ -123,7 +119,6 @@ function Sidenav3() {
       setClass_course(true);
     }
   };
-  console.log(selected_notes);
 
   return (
     <div className="w-[12rem]  overflow-y-auto z-[61] h-[100%] bg-sidenav_bkg_color shadow-lg">

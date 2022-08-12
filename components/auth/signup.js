@@ -31,13 +31,10 @@ function Signup() {
     createTeacher,
     {
       update(_, result) {
-        console.log(result);
+        const result = result;
       },
     }
   );
-
-  if (loading) console.log("Updating...");
-  if (error) console.log(JSON.stringify(error, null, 2));
 
   const checker = () => {
     const {

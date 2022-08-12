@@ -47,9 +47,6 @@ function Bookshelfeditbutton() {
     if (loading) {
       val = "...";
     }
-    if (error) {
-      console.log(JSON.stringify(error, null, 2));
-    }
     if (data) {
       return data.note;
     }

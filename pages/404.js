@@ -6,7 +6,7 @@ function Error() {
   useEffect(() => {
     router.push("/teacher/bookshelf");
   }, []);
-  return <div className=" bg-accent_bkg_color h-full ">404 page</div>;
+  return <div className=" bg-accent_bkg_color h-full "></div>;
 }
 
 export default Error;
