@@ -31,7 +31,7 @@ function Signup() {
     createTeacher,
     {
       update(_, result) {
-        const result = result;
+        const res = result;
       },
     }
   );
