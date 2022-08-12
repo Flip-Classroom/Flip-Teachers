@@ -131,7 +131,7 @@ function Class_course() {
   setShelf3(false);
 
   return (
-    <div className="nav_displays z-50 fixed overflow-y-auto md:top-[9%] bg-sidenav_bkg_color md:right-[6rem] md:pt-0 md:mt-4 md:h-max md:w-max md:rounded-md md:shadow-md top-0 h-[90%] w-[100vw] ">
+    <div className="nav_displays z-50 fixed overflow-y-auto md:top-[9%] bg-sidenav_bkg_color md:right-[6rem] md:pt-0 md:mt-4 md:h-max md:w-max md:rounded-md md:shadow-md top-0 h-full w-full ">
       {classcoursedata.working && (
         <div className="w-full absolute z-10 top-1 flex items-center justify-center ">
           <p className="py-2 text-xs px-4 text-center mx-auto shadow-lg bg-accent_color text-main_color">

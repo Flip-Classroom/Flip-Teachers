@@ -76,10 +76,25 @@ function Teachercontextprovider({ children }) {
   }
 
   function toggle_menu() {
-    setSidebarcon(!sidebarcon);
     setSidebar(!sidebar);
-    setNotification(false);
-    setClass_course(false);
+    setShelf3(false);
+    setShelf2(false);
+    // setSidebarcon(!sidebarcon);
+    // setSidebar(!sidebar);
+    // setNotification(false);
+    // setClass_course(false);
+  }
+
+  function toggle_shelf2() {
+    setSidebar(false);
+    setShelf2(!shelf2);
+    setShelf3(false);
+  }
+
+  function toggle_shelf3() {
+    setSidebar(false);
+    setShelf2(!shelf2);
+    setShelf3(!shelf3);
   }
 
   useEffect(() => {
@@ -127,6 +142,8 @@ function Teachercontextprovider({ children }) {
     toggle_class_course,
     sidebar,
     toggle_menu,
+    toggle_shelf2,
+    toggle_shelf3,
     shelf2,
     shelf3,
     setShelf2,
@@ -146,6 +163,7 @@ function Teachercontextprovider({ children }) {
     notetitle,
     setNotetitle,
     sidebartype,
+    setSidebar,
     setSidebartype,
     topbaraction,
     setTopbaraction,

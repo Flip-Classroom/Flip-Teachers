@@ -13,19 +13,23 @@ function Sidenav() {
     classcoursedata,
     setClass_course,
     teachername,
+    toggle_shelf2,
   } = useContext(TeacherContext);
 
   const show_shelf = () => {
     setCreate(false);
     setTopbaraction("Notes");
-    setShelf2(true);
+    // setShelf2(true);
+    toggle_shelf2();
     if (router.query.id === undefined) {
       router.push("/teacher/bookshelf");
     }
   };
 
   return (
-    <div className="w-[12rem] bg-sidenav_bkg_color shadow-md relative z-[67] top-0 h-[100%]">
+    <div
+      className={`md:w-[12rem] md:block w-[60%] bg-sidenav_bkg_color shadow-md relative z-[67] top-0 h-[100%]`}
+    >
       <div className=" absolute bottom-2 right-2 px-2">
         <Image src="/assets/logo.png" width={67} height={28} />
       </div>

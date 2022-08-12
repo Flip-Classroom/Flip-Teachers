@@ -3,12 +3,15 @@ import { TeacherContext } from "../../contexts/teachercontext";
 import { useRouter } from "next/router";
 
 function Sidenav2() {
-  const { setShelf2, setShelf3, setNotetype } = useContext(TeacherContext);
+  const { setShelf2, setShelf3, setNotetype, toggle_shelf3, toggle_menu } =
+    useContext(TeacherContext);
   const router = useRouter();
+  console.log("here");
   return (
-    <div className="w-[12rem] block z-[62] h-[100%] bg-sidenav_bkg_color shadow-lg">
+    <div className="md:w-[12rem] w-[60%] absolute mt-[8%] md:static md:mt-0 md:block z-[62] h-[100%] bg-sidenav_bkg_color shadow-lg">
       <div
         onClick={() => {
+          toggle_menu();
           setShelf2(false);
           setShelf3(false);
         }}
@@ -31,8 +34,9 @@ function Sidenav2() {
       <div className="selections mt-4">
         <div
           onClick={() => {
-            setShelf3(true);
+            // setShelf3(true);
             setNotetype("personal");
+            toggle_shelf3();
             router.push("/teacher/bookshelf");
           }}
           className="item flex pl-2 text-sm side_con cursor-pointer py-2 hover:text-main_color hover:bg-accent_bkg_hover mx-1 rounded-md mb-3 items-center"
@@ -42,8 +46,9 @@ function Sidenav2() {
         </div>
         <div
           onClick={() => {
-            setShelf3(true);
             setNotetype("school");
+            toggle_shelf3();
+            // setShelf3(true);
             router.push("/teacher/bookshelf");
           }}
           className="item flex pl-2 text-sm side_con cursor-pointer hover:bg-accent_bkg_hover mx-1 rounded-md py-2 hover:text-main_color mb-3 items-center"

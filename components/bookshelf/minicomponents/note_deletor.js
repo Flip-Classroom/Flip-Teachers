@@ -89,7 +89,7 @@ function Note_deletor() {
       id="nd_main_con"
       className="w-full h-[100vh] fixed top-0 z-50 bg-dark_color"
     >
-      <div className="w-[20rem] relative min-h-[11rem] h-max mt-[13%] bg-accent_bkg_color pt-[1rem] rounded-lg shadow-lg px-[1rem] mx-auto my-auto ">
+      <div className="w-[20rem] relative min-h-[11rem] mt-[40%] h-max md:mt-[13%] bg-accent_bkg_color pt-[1rem] rounded-lg shadow-lg px-[1rem] mx-auto my-auto ">
         <div
           onClick={() => {
             setNotedata({ ...notedata, deleteNote: false, deleteNoteId: "" });

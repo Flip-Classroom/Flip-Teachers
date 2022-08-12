@@ -284,7 +284,7 @@ export const resolvers = {
           lastName: input.lastName,
           address: input.address,
           state: input.state,
-          country: input.category,
+          country: input.country,
           postalCode: input.postalCode,
           email: input.email,
           image: input.image,
@@ -295,7 +295,7 @@ export const resolvers = {
 
         return await context.prisma.teacher.update({
           where: {
-            id: payload.teacherIdd,
+            id: payload.teacherId,
           },
           data: newInfo,
         });

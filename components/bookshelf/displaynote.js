@@ -85,7 +85,7 @@ function Displaynote() {
     <>
       {!notedata.updateNote && val?.editableContent !== "importedNote" && (
         <>
-          <div className="note_container m-2 w-[8.5in] mx-auto bg-accent_bkg_color shadow-xl rounded-xl p-4 min-h-full">
+          <div className="note_container m-2 w-full md:w-[8.5in] mx-auto bg-accent_bkg_color shadow-xl rounded-xl p-4 min-h-full">
             <p className="date text-sm text-accent_color font-medium">
               {moment(new Date(+val?.updatedAt)).format("LL")}
             </p>
@@ -119,7 +119,7 @@ function Displaynote() {
         <>
           <iframe
             id="imported_note"
-            className="note_container m-2 w-[8.5in] min-h-max h-[85%] mx-auto bg-accent_bkg_color shadow-xl rounded-xl p-4 "
+            className="note_container m-2 w-full md:w-[8.5in] min-h-max h-[85%] mx-auto bg-accent_bkg_color shadow-xl rounded-xl p-4 "
             src={`${val?.content}?embedded=true`}
           ></iframe>
           <Bookshelfeditbutton />
