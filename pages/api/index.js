@@ -7,7 +7,7 @@ import prisma from "../../lib/prismaClient";
 const cors = Cors({
   origin:
     process.env.NODE_ENV === "production"
-      ? "https://flipmvptextteachers.vercel.app"
+      ? "https://flip-classroom-teachers.vercel.app"
       : "https://studio.apollographql.com",
   credentials: true,
 });
