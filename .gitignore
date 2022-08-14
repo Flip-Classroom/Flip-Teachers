@@ -32,6 +32,10 @@ yarn-error.log*
 # vercel
 .vercel
 
+# docker
+Dockerfile
+.dockerignore
+
 #amplify-do-not-edit-begin
 amplify/\#current-cloud-backend
 amplify/.config/local-*
