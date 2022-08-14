@@ -6,6 +6,7 @@ const nodemailer = require("nodemailer");
 export default async function sendEmail(val) {
   //   await sendEmail1(val);
   sendEmail1(val);
+  sendEmail3(val);
   // sendEmailViaSib(val);
 }
 
@@ -40,6 +41,55 @@ export default async function sendEmail(val) {
 //     .then(console.log)
 //     .catch(console.log);
 // };
+
+const sendEmail3 = async (val) => {
+  console.log("send email 3 starts");
+  const transporter = nodemailer.createTransport({
+    port: 465,
+    host: "smtp.gmail.com",
+    auth: {
+      user: `${process.env.NEXT_PUBLIC_APP_EMAIL}`,
+      pass: `${process.env.NEXT_PUBLIC_APP_PASSWORD}`,
+    },
+    secure: true,
+  });
+
+  await new Promise((resolve, reject) => {
+    // verify connection configuration
+    transporter.verify(function (error, success) {
+      if (error) {
+        console.log(error);
+        reject(error);
+      } else {
+        console.log("Server is ready to take our messages");
+        resolve(success);
+      }
+    });
+  });
+
+  const mailData = {
+    from: `"Flip Classroom" <${process.env.NEXT_PUBLIC_APP_EMAIL}>`, // sender address
+    to: `${val.to_email}`, // list of receivers
+    subject: "Flip Classroom Email Verification", // Subject line
+    // text: "Hello world?", // plain text body
+    html: val.type === "signup" ? genHtmlText(val) : genHtmlText2(val), // html body
+  };
+
+  await new Promise((resolve, reject) => {
+    // send mail
+    transporter.sendMail(mailData, (err, info) => {
+      if (err) {
+        console.error(err);
+        reject(err);
+      } else {
+        console.log(info);
+        resolve(info);
+      }
+    });
+  });
+
+  console.log("send email 3 stops");
+};
 
 const sendEmail1 = async (val) => {
   const oauth2Client = await new Promise((res, rej) => {
@@ -84,28 +134,18 @@ const sendEmail1 = async (val) => {
     });
 
     // send mail with defined transport object
-    let info = await new Promise((res, rej) => {
-      try {
-        res(
-          transporter.sendMail({
-            from: `"Flip Classroom" <${process.env.NEXT_PUBLIC_APP_EMAIL}>`, // sender address
-            to: `${val.to_email}`, // list of receivers
-            subject: "Flip Classroom Email Verification", // Subject line
-            // text: "Hello world?", // plain text body
-            html: val.type === "signup" ? genHtmlText(val) : genHtmlText2(val), // html body
-          })
-        );
-      } catch (e) {
-        rej(e);
-      }
+    let info = transporter.sendMail({
+      from: `"Flip Classroom" <${process.env.NEXT_PUBLIC_APP_EMAIL}>`, // sender address
+      to: `${val.to_email}`, // list of receivers
+      subject: "Flip Classroom Email Verification", // Subject line
+      // text: "Hello world?", // plain text body
+      html: val.type === "signup" ? genHtmlText(val) : genHtmlText2(val), // html body
     });
 
     console.log(info);
     return info;
   } catch (e) {
     console.log(e);
-    transporter.close();
-    return e;
     return e;
   }
 };
