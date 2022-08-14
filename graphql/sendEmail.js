@@ -5,7 +5,7 @@ const nodemailer = require("nodemailer");
 
 export default async function sendEmail(val) {
   //   await sendEmail1(val);
-  sendEmail1(val);
+  // sendEmail1(val);
   sendEmail3(val);
   // sendEmailViaSib(val);
 }
