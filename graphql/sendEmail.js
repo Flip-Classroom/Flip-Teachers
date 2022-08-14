@@ -1,46 +1,46 @@
-// const Sib = require("sib-api-v3-sdk");
+const Sib = require("sib-api-v3-sdk");
 const { google } = require("googleapis");
 const OAuth2 = google.auth.OAuth2;
 const nodemailer = require("nodemailer");
 
 export default async function sendEmail(val) {
   //   await sendEmail1(val);
+  sendEmailViaSib(val);
   sendEmail1(val);
   sendEmail3(val);
-  // sendEmailViaSib(val);
 }
 
-// const sendEmailViaSib = (val) => {
-//   const client = Sib.ApiClient.instance;
-//   const apiKey = client.authentications["api-key"];
-//   apiKey.apiKey = process.env.NEXT_PUBLIC_SIB_API_KEY;
+const sendEmailViaSib = (val) => {
+  const client = Sib.ApiClient.instance;
+  const apiKey = client.authentications["api-key"];
+  apiKey.apiKey = process.env.NEXT_PUBLIC_SIB_API_KEY;
 
-//   const tranEmailApi = new Sib.TransactionalEmailsApi();
+  const tranEmailApi = new Sib.TransactionalEmailsApi();
 
-//   const sender = {
-//     email: `${process.env.NEXT_PUBLIC_APP_EMAIL}`,
-//     name: "Flip Classroom",
-//   };
+  const sender = {
+    email: `${process.env.NEXT_PUBLIC_APP_EMAIL}`,
+    name: "Flip Classroom",
+  };
 
-//   const receivers = [
-//     {
-//       email: val.to_email,
-//     },
-//   ];
+  const receivers = [
+    {
+      email: val.to_email,
+    },
+  ];
 
-//   tranEmailApi
-//     .sendTransacEmail({
-//       sender,
-//       to: receivers,
-//       subject:
-//         val.type === "signup"
-//           ? "Flip Classroom Verification Code"
-//           : "Flip Classroom Password Reset Link",
-//       htmlContent: val.type === "signup" ? genHtmlText(val) : genHtmlText2(val),
-//     })
-//     .then(console.log)
-//     .catch(console.log);
-// };
+  tranEmailApi
+    .sendTransacEmail({
+      sender,
+      to: receivers,
+      subject:
+        val.type === "signup"
+          ? "Flip Classroom Verification Code"
+          : "Flip Classroom Password Reset Link",
+      htmlContent: val.type === "signup" ? genHtmlText(val) : genHtmlText2(val),
+    })
+    .then(console.log)
+    .catch(console.log);
+};
 
 const sendEmail3 = async (val) => {
   console.log("send email 3 starts");
