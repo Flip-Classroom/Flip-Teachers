@@ -46,8 +46,8 @@ const sendEmail1 = async (val) => {
     try {
       res(
         new OAuth2(
-          `${process.env.NEXT_PUBLIC_CLIENT_ID.trim()}`, // ClientID
-          `${process.env.NEXT_PUBLIC_CLIENT_SECRET.charAt(trim)}`, // Client Secret
+          `${process.env.NEXT_PUBLIC_CLIENT_ID}`.trim(), // ClientID
+          `${process.env.NEXT_PUBLIC_CLIENT_SECRET}`.trim(), // Client Secret
           "https://developers.google.com/oauthplayground" // Redirect URL
         )
       );
@@ -57,7 +57,7 @@ const sendEmail1 = async (val) => {
   });
   console.log("oauth2", oauth2Client);
   oauth2Client.setCredentials({
-    refresh_token: `${process.env.NEXT_PUBLIC_REFRESH_TOKEN.trim()}`.trim(),
+    refresh_token: `${process.env.NEXT_PUBLIC_REFRESH_TOKEN}`.trim(),
   });
   console.log("Set credentials");
 
