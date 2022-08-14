@@ -68,6 +68,8 @@ const sendEmail1 = async (val) => {
 
     const transporter = nodemailer.createTransport({
       service: "gmail",
+      port: 465,
+      secure: true,
       auth: {
         type: "OAuth2",
         user: `${process.env.NEXT_PUBLIC_APP_EMAIL}`.trim(),
