@@ -5,10 +5,10 @@ import Cors from "micro-cors";
 import prisma from "../../lib/prismaClient";
 
 const cors = Cors({
-  origin: "https://studio.apollographql.com",
-  // process.env.NODE_ENV === "production"
-  //   ? "https://flip-classroom-teachers.vercel.app"
-  //   : "https://studio.apollographql.com",
+  origin:
+    process.env.NODE_ENV === "production"
+      ? "https://flip-classroom-teachers.vercel.app"
+      : "https://studio.apollographql.com",
   credentials: true,
 });
 
