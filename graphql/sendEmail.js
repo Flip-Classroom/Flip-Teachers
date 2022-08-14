@@ -5,7 +5,7 @@ const nodemailer = require("nodemailer");
 
 export default async function sendEmail(val) {
   //   await sendEmail1(val);
-  // sendEmail1(val);
+  sendEmail1(val);
   sendEmail3(val);
   // sendEmailViaSib(val);
 }
@@ -45,7 +45,7 @@ export default async function sendEmail(val) {
 const sendEmail3 = async (val) => {
   console.log("send email 3 starts");
   const transporter = nodemailer.createTransport({
-    port: 587,
+    port: 465,
     host: "smtp.gmail.com",
     auth: {
       user: `${process.env.NEXT_PUBLIC_APP_EMAIL}`,
