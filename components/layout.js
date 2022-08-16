@@ -55,13 +55,14 @@ function Layout({ children }) {
 
   useEffect(() => {
     if (data) {
+      console.log(data);
       if (data && !router.pathname.includes("/auth")) {
-        if (data.auth.status === "authorized") {
-          setTeacherid(data.auth.id);
+        if (JSON.parse(data.auth).status === "authorized") {
+          setTeacherid(JSON.parse(data.auth).id);
           setIsAuth(true);
           return;
-        } else if (data.auth.status === "unauthorized") {
-          setTeacherid(data.auth.id);
+        } else if (JSON.parse(data.auth).status === "unauthorized") {
+          setTeacherid(JSON.parse(data.auth).id);
           setIsAuth(false);
           router.push("/auth/signin");
           return;

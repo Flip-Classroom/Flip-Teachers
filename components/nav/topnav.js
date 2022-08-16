@@ -86,7 +86,6 @@ function Topnav() {
             Hello, {" " + val.length > 8 ? val.substring(0, 8) + "..." : val}!
           </h2>
         </div>
-        s
         <div className="icons mr-4 flex justify-between  w-[28%] md:w-max ">
           <div
             onClick={() => {
