@@ -72,7 +72,7 @@ function Note_deletor() {
       deleteNote: false,
       deletNoteId: "",
     });
-    router.push("/teacher/bookshelf");
+    router.push(`/${teacherid}/bookshelf`);
   };
 
   setShelf2(false);

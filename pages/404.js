@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { useRouter } from "next/router";
+import { TeacherContext } from "../components/contexts/teachercontext";
 
 function Error() {
   const router = useRouter();
+  const { teacherid } = useContext(TeacherContext);
   useEffect(() => {
-    router.push("/teacher/bookshelf");
+    router.push(`/${teacherid}/bookshelf`);
   }, []);
   return <div className=" bg-accent_bkg_color h-full "></div>;
 }

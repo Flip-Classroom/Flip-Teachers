@@ -39,6 +39,8 @@ function Layout({ children }) {
     notedata,
     ccdaction,
     toggle_menu,
+    setTeacherid,
+    teacherid,
   } = useContext(TeacherContext);
 
   const { auth, setIsAuth, isAuth, authType, setAuth } =
@@ -54,10 +56,12 @@ function Layout({ children }) {
   useEffect(() => {
     if (data) {
       if (data && !router.pathname.includes("/auth")) {
-        if (data.auth === "authorized") {
+        if (data.auth.status === "authorized") {
+          setTeacherid(data.auth.id);
           setIsAuth(true);
           return;
-        } else if (data.auth === "unauthorized") {
+        } else if (data.auth.status === "unauthorized") {
+          setTeacherid(data.auth.id);
           setIsAuth(false);
           router.push("/auth/signin");
           return;

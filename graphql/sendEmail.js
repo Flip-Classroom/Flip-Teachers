@@ -1,154 +1,174 @@
-const Sib = require("sib-api-v3-sdk");
-const { google } = require("googleapis");
-const OAuth2 = google.auth.OAuth2;
-const nodemailer = require("nodemailer");
+// const Sib = require("sib-api-v3-sdk");
+// const { google } = require("googleapis");
+// const OAuth2 = google.auth.OAuth2;
+// const nodemailer = require("nodemailer");
+const sgMail = require("@sendgrid/mail");
 
 export default async function sendEmail(val) {
   //   await sendEmail1(val);
-  sendEmailViaSib(val);
-  sendEmail1(val);
-  sendEmail3(val);
+  sendGridMailer(val);
+  // sendEmailViaSib(val);
+  // sendEmail1(val);
+  // sendEmail3(val);
 }
 
-const sendEmailViaSib = (val) => {
-  const client = Sib.ApiClient.instance;
-  const apiKey = client.authentications["api-key"];
-  apiKey.apiKey = process.env.NEXT_PUBLIC_SIB_API_KEY;
-
-  const tranEmailApi = new Sib.TransactionalEmailsApi();
-
-  const sender = {
-    email: `${process.env.NEXT_PUBLIC_APP_EMAIL}`,
-    name: "Flip Classroom",
+const sendGridMailer = (val) => {
+  sgMail.setApiKey(`${process.env.NEXT_PUBLIC_SEND_GRID_API_KEY}`);
+  const message = {
+    to: `${val.to_email}`,
+    from: `${process.env.NEXT_PUBLIC_APP_MAIN_EMAIL}`,
+    subject:
+      val.type === "signup"
+        ? "Flip Classroom Verification Code"
+        : "Flip Classroom Password Reset Link",
+    html: val.type === "signup" ? genHtmlText(val) : genHtmlText2(val),
   };
 
-  const receivers = [
-    {
-      email: val.to_email,
-    },
-  ];
-
-  tranEmailApi
-    .sendTransacEmail({
-      sender,
-      to: receivers,
-      subject:
-        val.type === "signup"
-          ? "Flip Classroom Verification Code"
-          : "Flip Classroom Password Reset Link",
-      htmlContent: val.type === "signup" ? genHtmlText(val) : genHtmlText2(val),
-    })
-    .then(console.log)
-    .catch(console.log);
+  sgMail
+    .send(message)
+    .then((res) => console.log("Email sent"))
+    .catch((e) => console.log(e));
 };
 
-const sendEmail3 = async (val) => {
-  console.log("send email 3 starts");
-  const transporter = nodemailer.createTransport({
-    port: 465,
-    host: "smtp.gmail.com",
-    auth: {
-      user: `${process.env.NEXT_PUBLIC_APP_EMAIL}`,
-      pass: `${process.env.NEXT_PUBLIC_APP_PASSWORD}`,
-    },
-    secure: true,
-  });
+// const sendEmailViaSib = (val) => {
+//   const client = Sib.ApiClient.instance;
+//   const apiKey = client.authentications["api-key"];
+//   apiKey.apiKey = process.env.NEXT_PUBLIC_SIB_API_KEY;
 
-  await new Promise((resolve, reject) => {
-    // verify connection configuration
-    transporter.verify(function (error, success) {
-      if (error) {
-        console.log(error);
-        reject(error);
-      } else {
-        console.log("Server is ready to take our messages");
-        resolve(success);
-      }
-    });
-  });
+//   const tranEmailApi = new Sib.TransactionalEmailsApi();
 
-  const mailData = {
-    from: `"Flip Classroom" <${process.env.NEXT_PUBLIC_APP_EMAIL}>`, // sender address
-    to: `${val.to_email}`, // list of receivers
-    subject: "Flip Classroom Email Verification", // Subject line
-    // text: "Hello world?", // plain text body
-    html: val.type === "signup" ? genHtmlText(val) : genHtmlText2(val), // html body
-  };
+//   const sender = {
+//     email: `${process.env.NEXT_PUBLIC_APP_EMAIL}`,
+//     name: "Flip Classroom",
+//   };
 
-  await new Promise((resolve, reject) => {
-    // send mail
-    transporter.sendMail(mailData, (err, info) => {
-      if (err) {
-        console.error(err);
-        reject(err);
-      } else {
-        console.log(info);
-        resolve(info);
-      }
-    });
-  });
+//   const receivers = [
+//     {
+//       email: val.to_email,
+//     },
+//   ];
 
-  console.log("send email 3 stops");
-};
+//   tranEmailApi
+//     .sendTransacEmail({
+//       sender,
+//       to: receivers,
+//       subject:
+//         val.type === "signup"
+//           ? "Flip Classroom Verification Code"
+//           : "Flip Classroom Password Reset Link",
+//       htmlContent: val.type === "signup" ? genHtmlText(val) : genHtmlText2(val),
+//     })
+//     .then(console.log)
+//     .catch(console.log);
+// };
 
-const sendEmail1 = async (val) => {
-  const oauth2Client = await new Promise((res, rej) => {
-    try {
-      res(
-        new OAuth2(
-          `${process.env.NEXT_PUBLIC_CLIENT_ID}`.trim(), // ClientID
-          `${process.env.NEXT_PUBLIC_CLIENT_SECRET}`.trim(), // Client Secret
-          "https://developers.google.com/oauthplayground" // Redirect URL
-        )
-      );
-    } catch (e) {
-      rej(e);
-    }
-  });
-  console.log("oauth2", oauth2Client);
-  oauth2Client.setCredentials({
-    refresh_token: `${process.env.NEXT_PUBLIC_REFRESH_TOKEN}`.trim(),
-  });
-  console.log("Set credentials");
+// const sendEmail3 = async (val) => {
+//   console.log("send email 3 starts");
+//   const transporter = nodemailer.createTransport({
+//     port: 465,
+//     host: "smtp.gmail.com",
+//     auth: {
+//       user: `${process.env.NEXT_PUBLIC_APP_EMAIL}`,
+//       pass: `${process.env.NEXT_PUBLIC_APP_PASSWORD}`,
+//     },
+//     secure: true,
+//   });
 
-  try {
-    console.log("above await");
-    const accessToken = await oauth2Client.getAccessToken();
-    console.log("access toke", accessToken);
+//   await new Promise((resolve, reject) => {
+//     // verify connection configuration
+//     transporter.verify(function (error, success) {
+//       if (error) {
+//         console.log(error);
+//         reject(error);
+//       } else {
+//         console.log("Server is ready to take our messages");
+//         resolve(success);
+//       }
+//     });
+//   });
 
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      port: 465,
-      secure: true,
-      auth: {
-        type: "OAuth2",
-        user: `${process.env.NEXT_PUBLIC_APP_EMAIL}`.trim(),
-        clientId: `${process.env.NEXT_PUBLIC_CLIENT_ID}`.trim(),
-        clientSecret: `${process.env.NEXT_PUBLIC_CLIENT_SECRET}`.trim(),
-        refreshToken: `${process.env.NEXT_PUBLIC_REFRESH_TOKEN}`.trim(),
-        accessToken: accessToken,
-      },
-      tls: {
-        rejectUnauthorized: false,
-      },
-    });
+//   const mailData = {
+//     from: `"Flip Classroom" <${process.env.NEXT_PUBLIC_APP_EMAIL}>`, // sender address
+//     to: `${val.to_email}`, // list of receivers
+//     subject: "Flip Classroom Email Verification", // Subject line
+//     // text: "Hello world?", // plain text body
+//     html: val.type === "signup" ? genHtmlText(val) : genHtmlText2(val), // html body
+//   };
 
-    // send mail with defined transport object
-    let info = transporter.sendMail({
-      from: `"Flip Classroom" <${process.env.NEXT_PUBLIC_APP_EMAIL}>`, // sender address
-      to: `${val.to_email}`, // list of receivers
-      subject: "Flip Classroom Email Verification", // Subject line
-      // text: "Hello world?", // plain text body
-      html: val.type === "signup" ? genHtmlText(val) : genHtmlText2(val), // html body
-    });
+//   await new Promise((resolve, reject) => {
+//     // send mail
+//     transporter.sendMail(mailData, (err, info) => {
+//       if (err) {
+//         console.error(err);
+//         reject(err);
+//       } else {
+//         console.log(info);
+//         resolve(info);
+//       }
+//     });
+//   });
 
-    console.log(info);
-    return info;
-  } catch (e) {
-    console.log(e);
-    return e;
-  }
-};
+//   console.log("send email 3 stops");
+// };
+
+// const sendEmail1 = async (val) => {
+//   const oauth2Client = await new Promise((res, rej) => {
+//     try {
+//       res(
+//         new OAuth2(
+//           `${process.env.NEXT_PUBLIC_CLIENT_ID}`.trim(), // ClientID
+//           `${process.env.NEXT_PUBLIC_CLIENT_SECRET}`.trim(), // Client Secret
+//           "https://developers.google.com/oauthplayground" // Redirect URL
+//         )
+//       );
+//     } catch (e) {
+//       rej(e);
+//     }
+//   });
+//   console.log("oauth2", oauth2Client);
+//   oauth2Client.setCredentials({
+//     refresh_token: `${process.env.NEXT_PUBLIC_REFRESH_TOKEN}`.trim(),
+//   });
+//   console.log("Set credentials");
+
+//   try {
+//     console.log("above await");
+//     const accessToken = await oauth2Client.getAccessToken();
+//     console.log("access toke", accessToken);
+
+//     const transporter = nodemailer.createTransport({
+//       service: "gmail",
+//       port: 465,
+//       secure: true,
+//       auth: {
+//         type: "OAuth2",
+//         user: `${process.env.NEXT_PUBLIC_APP_EMAIL}`.trim(),
+//         clientId: `${process.env.NEXT_PUBLIC_CLIENT_ID}`.trim(),
+//         clientSecret: `${process.env.NEXT_PUBLIC_CLIENT_SECRET}`.trim(),
+//         refreshToken: `${process.env.NEXT_PUBLIC_REFRESH_TOKEN}`.trim(),
+//         accessToken: accessToken,
+//       },
+//       tls: {
+//         rejectUnauthorized: false,
+//       },
+//     });
+
+//     // send mail with defined transport object
+//     let info = transporter.sendMail({
+//       from: `"Flip Classroom" <${process.env.NEXT_PUBLIC_APP_EMAIL}>`, // sender address
+//       to: `${val.to_email}`, // list of receivers
+//       subject: "Flip Classroom Email Verification", // Subject line
+//       // text: "Hello world?", // plain text body
+//       html: val.type === "signup" ? genHtmlText(val) : genHtmlText2(val), // html body
+//     });
+
+//     console.log(info);
+//     return info;
+//   } catch (e) {
+//     console.log(e);
+//     return e;
+//   }
+// };
 
 const genHtmlText = (val) => {
   return `

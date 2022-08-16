@@ -3,8 +3,14 @@ import { TeacherContext } from "../../contexts/teachercontext";
 import { useRouter } from "next/router";
 
 function Sidenav2() {
-  const { setShelf2, setShelf3, setNotetype, toggle_shelf3, toggle_menu } =
-    useContext(TeacherContext);
+  const {
+    setShelf2,
+    setShelf3,
+    setNotetype,
+    toggle_shelf3,
+    toggle_menu,
+    teacherid,
+  } = useContext(TeacherContext);
   const router = useRouter();
   console.log("here");
   return (
@@ -37,7 +43,7 @@ function Sidenav2() {
             // setShelf3(true);
             setNotetype("personal");
             toggle_shelf3();
-            router.push("/teacher/bookshelf");
+            router.push(`/${teacherid}/bookshelf`);
           }}
           className="item flex pl-2 text-sm side_con cursor-pointer py-2 hover:text-main_color hover:bg-accent_bkg_hover mx-1 rounded-md mb-3 items-center"
         >
@@ -49,7 +55,7 @@ function Sidenav2() {
             setNotetype("school");
             toggle_shelf3();
             // setShelf3(true);
-            router.push("/teacher/bookshelf");
+            router.push(`/${teacherid}/bookshelf`);
           }}
           className="item flex pl-2 text-sm side_con cursor-pointer hover:bg-accent_bkg_hover mx-1 rounded-md py-2 hover:text-main_color mb-3 items-center"
         >

@@ -43,7 +43,7 @@ function Displaynote() {
 
   useEffect(() => {
     if ((classcoursedata.classId === "", classcoursedata.courseId === "")) {
-      router.push("/teacher/bookshelf");
+      router.push(`/${teacher}/bookshelf`);
     }
   }, []);
 

@@ -14,6 +14,7 @@ function Sidenav() {
     setClass_course,
     teachername,
     toggle_shelf2,
+    teacherid,
   } = useContext(TeacherContext);
 
   const show_shelf = () => {
@@ -22,7 +23,7 @@ function Sidenav() {
     // setShelf2(true);
     toggle_shelf2();
     if (router.query.id === undefined) {
-      router.push("/teacher/bookshelf");
+      router.push(`/${teacherid}/bookshelf`);
     }
   };
 
@@ -84,7 +85,7 @@ function Sidenav() {
           onClick={() => {
             setTopbaraction("Settings");
             setCreate(false);
-            router.push("/teacher/settings");
+            router.push(`/${teacherid}/settings`);
           }}
           className="icon_con flex mx-1 px-4 rounded-md items-center text-center py-2 hover:text-dark_color text-dark_color_2 cursor-pointer mt-2 hover:bg-accent_bkg_hover"
         >

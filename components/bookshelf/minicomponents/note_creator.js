@@ -127,7 +127,7 @@ function Note_creator() {
         updateContent: "",
         ready: false,
       });
-      router.push("/teacher/bookshelf/" + notetype + "/" + creatednoteid);
+      router.push(`/${teacherid}/bookshelf/${notetype}/${creatednoteid}`);
     }
   };
 

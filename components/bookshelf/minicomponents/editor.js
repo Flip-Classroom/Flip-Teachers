@@ -94,7 +94,7 @@ function Editor({ edit_content }) {
 
   useEffect(() => {
     if (classcoursedata.courseId === "" || classcoursedata.classId === "") {
-      router.push("/teacher/bookshelf");
+      router.push(`/${teacherid}/bookshelf`);
     }
   }, []);
 
@@ -131,7 +131,7 @@ function Editor({ edit_content }) {
       updateContent: "",
       ready: false,
     });
-    router.push("/teacher/bookshelf/" + notetype + "/" + creatednoteid);
+    router.push(`/${teacherid}/bookshelf/${notetype}/${creatednoteid}`);
   };
 
   useEffect(() => {

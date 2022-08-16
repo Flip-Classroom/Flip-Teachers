@@ -106,9 +106,9 @@ export const resolvers = {
       const { verified, payload } = isAuth(context.req);
       console.log("vf", verified);
       if (verified) {
-        return "authorized";
+        return { status: "authorized", id: payload.teacherId };
       } else {
-        return "unauthorized";
+        return { status: "unauthorized", id: "" };
       }
     },
   },
@@ -493,10 +493,10 @@ export const resolvers = {
           } catch (e) {
             console.log(e);
           }
-          return "Verified";
+          return { status: "Verified", id: val.id };
         }
       } catch (e) {
-        return "Failed";
+        return { status: "Failed", id: val.id };
       }
     },
   },

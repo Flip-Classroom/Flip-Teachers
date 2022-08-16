@@ -23,13 +23,6 @@ function Signin() {
   const router = useRouter();
 
   const { setIsAuth, isAuth } = useContext(AuthContext);
-
-  useEffect(() => {
-    if (isAuth) {
-      router.push("/student/bookshelf");
-    }
-  }, []);
-
   const [login_teacher, { data, loading, error }] = useMutation(loginTeacher);
   const [btntxt, setBtntxt] = useState("Sign In");
   const [err_msg, setErrorMsg] = useState("");
@@ -62,14 +55,14 @@ function Signin() {
       variables: { input: inputVal },
     });
 
-    if (login.data.signIn === "Failed") {
+    if (login.data.signIn.status === "Failed") {
       return (
         setErrorMsg("Invalid email or password, please try again"),
         setBtntxt("Sign In")
       );
     }
 
-    if (login.data.signIn === "Unverified Email") {
+    if (login.data.signIn.status === "Unverified Email") {
       return (
         setUnverified(true),
         setErrorMsg("Please verify email and try again"),
@@ -83,12 +76,7 @@ function Signin() {
 
     setPassword("");
     setEmail("");
-    return setIsAuth(true), router.push("/teacher");
-
-    setTimeout(() => {
-      setErrorMsg("");
-      setBtntxt("Sign In");
-    }, 5000);
+    return setIsAuth(true), router.push(`/${login.data.signIn.id}`);
   };
 
   return (

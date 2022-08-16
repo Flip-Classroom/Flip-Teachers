@@ -83,9 +83,9 @@ function Sidebar3() {
     setCreate(true);
     setCreatetype("untitled");
     if (notetype == "school")
-      return router.push("/teacher/bookshelf/school/new");
+      return router.push(`/${teacherid}/bookshelf/school/new`);
     if (notetype == "personal")
-      return router.push("/teacher/bookshelf/personal/new");
+      return router.push(`/${teacherid}/bookshelf/personal/new`);
   };
 
   const read_note = (id) => {
@@ -100,7 +100,7 @@ function Sidebar3() {
       return new_note();
     if (classcoursedata.classId !== "" && classcoursedata.courseId !== "") {
       setCreatednoteid(id);
-      router.push("/teacher/bookshelf/" + notetype + "/" + id);
+      router.push(`/${teacherid}/bookshelf/${notetype}/${id}`);
     } else {
       setClass_course(true);
     }

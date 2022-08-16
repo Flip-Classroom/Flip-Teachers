@@ -77,7 +77,7 @@ function Topnav() {
           <div
             onClick={() => {
               setTopbaraction("Personal");
-              router.push("/teacher/settings");
+              router.push(`/${teacherid}/settings`);
             }}
             id="profile_img"
             className="profile_img rounded-full cursor-pointer bg-no-repeat bg-cover bg-center h-[2.5rem] md:h-9 md:w-9 ml-4 w-[2.5rem] bg-main_color shadow-lg border-[1px] border-accent_color"
@@ -86,7 +86,7 @@ function Topnav() {
             Hello, {" " + val.length > 8 ? val.substring(0, 8) + "..." : val}!
           </h2>
         </div>
-
+        s
         <div className="icons mr-4 flex justify-between  w-[28%] md:w-max ">
           <div
             onClick={() => {
