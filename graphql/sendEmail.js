@@ -14,6 +14,10 @@ export default async function sendEmail(val) {
 
 const sendGridMailer = (val) => {
   sgMail.setApiKey(`${process.env.NEXT_PUBLIC_SEND_GRID_API_KEY}`);
+  console.log(
+    process.env.NEXT_PUBLIC_SEND_GRID_API_KEY,
+    process.env.NEXT_PUBLIC_APP_MAIN_EMAIL
+  );
   const message = {
     to: `${val.to_email}`,
     from: `${process.env.NEXT_PUBLIC_APP_MAIN_EMAIL}`,
