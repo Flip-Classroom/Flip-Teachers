@@ -360,7 +360,7 @@ export const resolvers = {
         });
         const inputVal = {
           to_email: val.email,
-          message: `https://development.dbetgujmgmk5n.amplifyapp.com/auth/changepassword/${val.id}`,
+          message: `https://flip-classroom-teachers/auth/changepassword/${val.id}`,
           type: "new_password",
         };
         sendEmail(inputVal);
