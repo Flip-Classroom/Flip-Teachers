@@ -55,14 +55,14 @@ function Signin() {
       variables: { input: inputVal },
     });
 
-    if (login.data.signIn.status === "Failed") {
+    if (JSON.parse(login.data.signIn).status === "Failed") {
       return (
         setErrorMsg("Invalid email or password, please try again"),
         setBtntxt("Sign In")
       );
     }
 
-    if (login.data.signIn.status === "Unverified Email") {
+    if (JSON.parse(login.data.signIn).status === "Unverified Email") {
       return (
         setUnverified(true),
         setErrorMsg("Please verify email and try again"),
@@ -76,7 +76,8 @@ function Signin() {
 
     setPassword("");
     setEmail("");
-    return setIsAuth(true), router.push(`/${login.data.signIn.id}`);
+    console.log(login.data);
+    return setIsAuth(true), router.push(`/${JSON.parse(login.data.signIn).id}`);
   };
 
   return (

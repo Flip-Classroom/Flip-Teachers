@@ -499,7 +499,7 @@ export const resolvers = {
           return JSON.stringify({ status: "Verified", id: val.id });
         }
       } catch (e) {
-        return JSON.stringify({ status: "Failed", id: val.id });
+        return JSON.stringify({ status: "Failed", id: "" });
       }
     },
   },

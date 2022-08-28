@@ -59,17 +59,17 @@ function Layout({ children }) {
       if (data && !router.pathname.includes("/auth")) {
         if (JSON.parse(data.auth).status === "authorized") {
           setTeacherid(JSON.parse(data.auth).id);
-          setIsAuth(true);
+          if (!isAuth) setIsAuth(true);
           return;
         } else if (JSON.parse(data.auth).status === "unauthorized") {
           setTeacherid(JSON.parse(data.auth).id);
-          setIsAuth(false);
+          if (isAuth) setIsAuth(false);
           router.push("/auth/signin");
           return;
         }
       }
     }
-  }, [data]);
+  }, [data, isAuth]);
 
   return (
     <div className="flex w-[100%] max-w-[100%] h-[100vh] ">
