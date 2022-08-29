@@ -111,7 +111,7 @@ function Signin() {
           <p className="font-extrabold">
             Click here to verify email{" "}
             <span
-              onClick={() => router.push("/auth/verification")}
+              onClick={() => router.push(`/auth/verification/${email}`)}
               className="text-accent_color cursor-pointer"
             >
               Verify Email
