@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { TeacherContext } from "../../contexts/teachercontext";
 import { gql, useMutation, useQuery } from "@apollo/client";
+import { storage } from "../../../firebase/firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const UpdateTeacherProfile = gql`
   mutation UpdateTeacherProfile($input: updateTeacherProfileInput) {
@@ -35,6 +37,7 @@ function Personaldets() {
 
   const [saver, setSaver] = useState(false);
   const [showinstruction, setShowinstruction] = useState(true);
+  const [uploadState, setUploadState] = useState("");
 
   const styles = {
     input:
@@ -90,6 +93,7 @@ function Personaldets() {
     setSaver(true);
     setShowinstruction(false);
     setTeacherprofile({ ...teacherprofile, [e.target.name]: e.target.value });
+    setUploadState("");
   };
 
   useEffect(() => {
@@ -119,6 +123,22 @@ function Personaldets() {
       ).style.backgroundImage = `url(${teacherprofile.image})`;
     }
   }, [teacherprofile]);
+
+  const uploadImage = async (e) => {
+    const img = e.target.files[0];
+    if (img === null || img === "") {
+      setUploadState("Please select a valid file");
+      return;
+    }
+    setUploadState("Uploading...");
+    const imageRef = ref(storage, `teacher/profilepic/${teacherid}`);
+    await uploadBytes(imageRef, img);
+    setUploadState("Upload Successful");
+    const url = await getDownloadURL(
+      ref(storage, `teacher/profilepic/${teacherid}`)
+    );
+    return url;
+  };
 
   const update = () => {
     if (init_data) {
@@ -154,12 +174,24 @@ function Personaldets() {
         </p>
         <div className="w-[7rem] mx-auto mt-4">
           <input
-            onChange={get_teacher_info}
+            onChange={async (event) => {
+              const e = {
+                target: {
+                  name: "image",
+                  value: await uploadImage(event),
+                },
+              };
+              get_teacher_info(e);
+            }}
+            accept="image/*"
             name="image"
             type={"file"}
             className="block cursor-pointer file:font-medium file:cursor-pointer w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:text-dark_color file:bg-accent_color_2"
           />
         </div>
+        <p className="img_err_msg text-center text-accent_color font-semibold text-sm">
+          {uploadState}
+        </p>
       </div>
       <input
         onChange={get_teacher_info}

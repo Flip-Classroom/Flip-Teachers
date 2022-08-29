@@ -360,7 +360,7 @@ export const resolvers = {
         });
         const inputVal = {
           to_email: val.email,
-          message: `https://flip-classroom-teachers/auth/changepassword/${val.id}`,
+          message: `https://flip-classroom-teachers.readate.org/auth/changepassword/${val.id}`,
           type: "new_password",
         };
         await sendEmail(inputVal);
