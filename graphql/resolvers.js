@@ -339,7 +339,7 @@ export const resolvers = {
           type: "signup",
         };
         try {
-          sendEmail(emailval);
+          await sendEmail(emailval);
         } catch (error) {
           console.log(error);
           return "Server Error";
@@ -363,7 +363,7 @@ export const resolvers = {
           message: `https://flip-classroom-teachers/auth/changepassword/${val.id}`,
           type: "new_password",
         };
-        sendEmail(inputVal);
+        await sendEmail(inputVal);
         return "Successful";
       } catch (e) {
         console.log(e);
@@ -436,7 +436,7 @@ export const resolvers = {
           type: "signup",
         };
         try {
-          sendEmail(emailval);
+          await sendEmail(emailval);
         } catch (e) {
           console.log(e);
         }

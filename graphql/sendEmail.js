@@ -6,7 +6,7 @@ const sgMail = require("@sendgrid/mail");
 
 export default async function sendEmail(val) {
   //   await sendEmail1(val);
-  sendGridMailer(val);
+  await sendGridMailer(val);
   // sendEmailViaSib(val);
   // sendEmail1(val);
   // sendEmail3(val);
