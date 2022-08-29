@@ -464,7 +464,8 @@ export const resolvers = {
           val.password
         );
         console.log(val, verifyPassword);
-        if (val && val.verifiedEmail === false) return "Unverified Email";
+        if (val && val.verifiedEmail === false)
+          return JSON.stringify({ status: "Unverified Email", id: "" });
         if (val == null || verifyPassword === false) {
           console.log("here");
           return "Failed";
