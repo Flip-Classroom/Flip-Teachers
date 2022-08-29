@@ -12,7 +12,7 @@ export default async function sendEmail(val) {
   // sendEmail3(val);
 }
 
-const sendGridMailer = (val) => {
+const sendGridMailer = async (val) => {
   sgMail.setApiKey(`${process.env.NEXT_PUBLIC_SEND_GRID_API_KEY}`);
   console.log(
     process.env.NEXT_PUBLIC_SEND_GRID_API_KEY,
@@ -28,7 +28,7 @@ const sendGridMailer = (val) => {
     html: val.type === "signup" ? genHtmlText(val) : genHtmlText2(val),
   };
 
-  sgMail
+  await sgMail
     .send(message)
     .then((res) => console.log("Email sent"))
     .catch((e) => console.log(e));
