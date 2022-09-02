@@ -1,9 +1,11 @@
 import React, { createContext, useState, useEffect } from "react";
 import { gql, useMutation } from "@apollo/client";
+import { useRouter } from "next/router";
 
 const TeacherContext = createContext();
 
 function Teachercontextprovider({ children }) {
+  const router = useRouter();
   const [notification, setNotification] = useState(false);
   const [class_course, setClass_course] = useState(false);
   const [sidebar, setSidebar] = useState(false);
@@ -47,7 +49,7 @@ function Teachercontextprovider({ children }) {
   const [savenote, setSavenote] = useState(false);
   const [action, setAction] = useState("Class");
   const [teachername, setTeachername] = useState(" ");
-  const [teacherid, setTeacherid] = useState("cl60fwtlx0056dckskcuwnjey");
+  const [teacherid, setTeacherid] = useState("");
   const [teacherprofile, setTeacherprofile] = useState({
     firstname: "",
     lastname: "",
@@ -99,7 +101,9 @@ function Teachercontextprovider({ children }) {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      let data = window.localStorage.getItem("FLIP_CLASSROOM_STATE_TEACHER");
+      let data = window.localStorage.getItem(
+        `FLIP_CLASSROOM_STATE_TEACHER_${router.query.teacherId}`
+      );
       if (data !== null) {
         data = JSON.parse(data);
         setClasscoursedata({
@@ -112,7 +116,7 @@ function Teachercontextprovider({ children }) {
         });
       }
     }
-  }, []);
+  }, [router.query.teacherId]);
 
   useEffect(() => {
     let values = {
@@ -129,7 +133,7 @@ function Teachercontextprovider({ children }) {
       values.className = classcoursedata.className;
       values.courseName = classcoursedata.courseName;
       return window.localStorage.setItem(
-        "FLIP_CLASSROOM_STATE_TEACHER",
+        `FLIP_CLASSROOM_STATE_TEACHER_${teacherid}`,
         JSON.stringify(values)
       );
     }

@@ -6,9 +6,6 @@ import { TeacherContext } from "./contexts/teachercontext";
 import Class_course from "./nav/minicomponents/class_course";
 import Sidenav2 from "./nav/minicomponents/sidenav2";
 import Sidenav3 from "./nav/minicomponents/sidenav3";
-import Sidebar from "./nav/minicomponents/sidebar";
-import Sidebar2 from "./nav/minicomponents/sidebar2";
-import Sidebar3 from "./nav/minicomponents/sidebar3";
 import Newclass from "./nav/minicomponents/newclass";
 import Note_deletor from "./bookshelf/minicomponents/note_deletor";
 import Newcourse from "./nav/minicomponents/newcourse";
@@ -17,14 +14,8 @@ import Deletecourse from "./nav/minicomponents/deletecourse";
 import Shareclass from "./nav/minicomponents/shareclass";
 import Note_share from "./bookshelf/minicomponents/note_share";
 import { AuthContext } from "./contexts/authcontext";
-import { gql, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
-
-const Auth = gql`
-  query Query {
-    auth
-  }
-`;
+import useAuthChecker from "./customHooks/useAuthChecker";
 
 function Layout({ children }) {
   const router = useRouter();
@@ -43,43 +34,17 @@ function Layout({ children }) {
     teacherid,
   } = useContext(TeacherContext);
 
-  const { auth, setIsAuth, isAuth, authType, setAuth } =
-    useContext(AuthContext);
-
-  const { data, error, loading, refetch } = useQuery(Auth, {
-    fetchPolicy: "network-only",
-    nextFetchPolicy: "cache-first",
-  });
-
-  refetch();
-
-  useEffect(() => {
-    if (data) {
-      console.log(data);
-      if (data && !router.pathname.includes("/auth")) {
-        if (JSON.parse(data.auth).status === "authorized") {
-          setTeacherid(JSON.parse(data.auth).id);
-          if (!isAuth) setIsAuth(true);
-          return;
-        } else if (JSON.parse(data.auth).status === "unauthorized") {
-          setTeacherid(JSON.parse(data.auth).id);
-          if (isAuth) setIsAuth(false);
-          router.push("/auth/signin");
-          return;
-        }
-      }
-    }
-  }, [data, isAuth]);
+  let authData = useAuthChecker();
+  if (authData) {
+    authData = JSON.parse(authData.auth);
+    setTeacherid(authData.id);
+  }
 
   return (
-    <div className="flex w-[100%] max-w-[100%] h-[100vh] ">
-      {isAuth && (
+    <>
+      {/* {authData && authData.status === "authorized" && ( */}
+      <div className="flex w-[100%] max-w-[100%] h-[100vh] ">
         <div className="contents border-2">
-          {/* <div className="sidebar_displays md:none z-40 w-max top-0 h-full absolute bg-main_color">
-            {sidebartype == "bar2" && <Sidebar2 />}
-            {sidebartype == "bar3" && <Sidebar3 />}
-            {sidebar && <Sidebar />}
-          </div> */}
           <div className="md:contents md:static absolute md:w-[12rem] md:mt-0 md:h-full w-full border-2 border-accent_color mt-[10%] h-[90%]">
             {/* smaller screens */}
             <div className="md:hidden block h-full">
@@ -95,29 +60,26 @@ function Layout({ children }) {
             </div>
           </div>
         </div>
-      )}
-      <div className="w-[100vw] md:w-[95%] overflow-y-hidden">
-        {isAuth && <Topnav />}
-        <div className=" h-full pb-4">
-          {isAuth && (
-            <>
-              {notification && <Notifications />}
-              {class_course && <Class_course />}
-              {classcoursedata.action === "new_class" && <Newclass />}
-              {classcoursedata.action === "new_course" && <Newcourse />}
-              {ccdaction === "delete_class" && <Deleteclass />}
-              {ccdaction === "delete_course" && <Deletecourse />}
-              {ccdaction === "share_class" && <Shareclass />}
-              {ccdaction === "share_note" && <Note_share />}
-              {notedata.deleteNote && <Note_deletor />}
-            </>
-          )}
-          <div className=" bg-accent_bkg_color relative h-full overflow-y-auto w-full md:static md:top-0">
-            {children}
+        <div className="w-[100vw] md:w-[95%] overflow-y-hidden">
+          <Topnav />
+          <div className=" h-full pb-4">
+            {notification && <Notifications />}
+            {class_course && <Class_course />}
+            {classcoursedata.action === "new_class" && <Newclass />}
+            {classcoursedata.action === "new_course" && <Newcourse />}
+            {ccdaction === "delete_class" && <Deleteclass />}
+            {ccdaction === "delete_course" && <Deletecourse />}
+            {ccdaction === "share_class" && <Shareclass />}
+            {ccdaction === "share_note" && <Note_share />}
+            {notedata.deleteNote && <Note_deletor />}
+            <div className=" bg-accent_bkg_color relative h-full overflow-y-auto w-full md:static md:top-0">
+              {children}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      {/* )} */}
+    </>
   );
 }
 

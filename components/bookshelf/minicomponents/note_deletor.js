@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef } from "react";
 import { TeacherContext } from "../../contexts/teachercontext";
 import { gql, useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
@@ -42,6 +42,7 @@ function Note_deletor() {
   } = useContext(TeacherContext);
 
   const router = useRouter();
+  const deleteContainerRef = useRef();
 
   const [deleteTeacherNote, { data, loading, error }] = useMutation(
     DeleteNote,
@@ -78,15 +79,11 @@ function Note_deletor() {
   setShelf2(false);
   setShelf3(false);
 
-  if (typeof document != "undefined") {
-    document.getElementById("nd_main_con").addEventListener("keyup", (e) => {
-      e.key === "Enter" ? delete_note() : null;
-    });
-  }
-
   return (
     <div
       id="nd_main_con"
+      ref={deleteContainerRef}
+      onKeyUp={(e) => (e.key === "Enter" ? delete_note() : null)}
       className="w-full h-[100vh] fixed top-0 z-50 bg-dark_color"
     >
       <div className="w-[20rem] relative min-h-[11rem] mt-[40%] h-max md:mt-[13%] bg-accent_bkg_color pt-[1rem] rounded-lg shadow-lg px-[1rem] mx-auto my-auto ">

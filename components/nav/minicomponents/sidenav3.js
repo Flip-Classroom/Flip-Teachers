@@ -42,6 +42,7 @@ function Sidenav3() {
   // let notes = [];
 
   const [notes, setNotes] = useState([]);
+  let selected_notes;
 
   const { data, error, loading } = useQuery(Note, {
     variables: {
@@ -63,7 +64,7 @@ function Sidenav3() {
       ]);
     } else {
       if (loading) {
-        setNotes([{ topic: "...", id: "..." }]);
+        selected_notes = "...loading";
       }
       if (data && data.notes.length > 0) {
         setNotes(data.notes);
@@ -78,8 +79,6 @@ function Sidenav3() {
       }
     }
   }, [data]);
-
-  let selected_notes;
 
   selected_notes = notes.map((val, index) => {
     return (
@@ -173,6 +172,11 @@ function Sidenav3() {
               </div>
             </div>
           )}
+
+          {(selected_notes.length === 0 || selected_notes === "...loading") && (
+            <div className="items mx-3 mt-1 text-sm">{"...loading"}</div>
+          )}
+
           {data && data.notes.length > 0 && (
             <div className="items mx-3 mt-1 text-sm">{selected_notes}</div>
           )}

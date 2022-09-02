@@ -31,6 +31,7 @@ function Displaynote() {
     setNotedata,
     setUpdatenotechecker,
     classcoursedata,
+    teacherid,
   } = useContext(TeacherContext);
 
   const { data, error, loading } = useQuery(Note, {
@@ -43,7 +44,7 @@ function Displaynote() {
 
   useEffect(() => {
     if ((classcoursedata.classId === "", classcoursedata.courseId === "")) {
-      router.push(`/${teacher}/bookshelf`);
+      router.push(`/${teacherid}/bookshelf`);
     }
   }, []);
 
@@ -61,23 +62,6 @@ function Displaynote() {
   if (data) {
     val = data.note;
   }
-
-  // useEffect(() => {
-  //   if (
-  //     typeof document != "undefined" &&
-  //     val?.editableContent == "importedNote"
-  //   ) {
-  //     // Selecting the iframe element
-  //     var iframe = document.getElementById("imported_note");
-  //     console.log("height", iframe.contentWindow.document.body.offsetHeight);
-
-  //     // Adjusting the iframe height onload event
-  //     iframe.onload = function () {
-  //       iframe.style.height =
-  //         iframe.contentWindow.document.body.scrollHeight + "px";
-  //     };
-  //   }
-  // }, []);
 
   if (!notedata.updateNote) setCreate(false);
 

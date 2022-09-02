@@ -3,6 +3,7 @@ import Image from "next/image";
 import { AuthContext } from "../contexts/authcontext";
 import { useRouter } from "next/router";
 import { gql, useMutation } from "@apollo/client";
+import useAuthChecker from "../customHooks/useAuthChecker";
 
 const loginTeacher = gql`
   mutation SignIn($input: signInInput) {
@@ -76,8 +77,8 @@ function Signin() {
 
     setPassword("");
     setEmail("");
-    console.log(login.data);
-    return setIsAuth(true), router.push(`/${JSON.parse(login.data.signIn).id}`);
+    setErrorMsg("");
+    return router.push(`/${JSON.parse(login.data.signIn).id}`);
   };
 
   return (
@@ -123,7 +124,10 @@ function Signin() {
             onKeyUp={(e) => (e.key === "Enter" ? checker() : null)}
             className={`input ${styles.input}`}
             type={"email"}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setUnverified(false);
+              setEmail(e.target.value);
+            }}
             value={email}
             placeholder="Email"
           />
@@ -131,7 +135,9 @@ function Signin() {
             onKeyUp={(e) => (e.key === "Enter" ? checker() : null)}
             className={`input mt-8 ${styles.input}`}
             type={"password"}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setUnverified(false), setPassword(e.target.value);
+            }}
             value={password}
             placeholder="Password"
           />

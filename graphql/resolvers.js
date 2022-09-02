@@ -398,7 +398,6 @@ export const resolvers = {
         });
         return "Verified";
       } catch (e) {
-        console.log(e);
         return "Failed";
       }
     },
@@ -467,8 +466,7 @@ export const resolvers = {
         if (val && val.verifiedEmail === false)
           return JSON.stringify({ status: "Unverified Email", id: "" });
         if (val == null || verifyPassword === false) {
-          console.log("here");
-          return "Failed";
+          return JSON.stringify({ status: "Failed", id: "" });
         } else {
           const access = (key, exp) => {
             console.log(

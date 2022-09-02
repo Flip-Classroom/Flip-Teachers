@@ -12,7 +12,6 @@ function Sidenav2() {
     teacherid,
   } = useContext(TeacherContext);
   const router = useRouter();
-  console.log("here");
   return (
     <div className="md:w-[12rem] w-[60%] absolute mt-[8%] md:static md:mt-0 md:block z-[62] h-[100%] bg-sidenav_bkg_color shadow-lg">
       <div

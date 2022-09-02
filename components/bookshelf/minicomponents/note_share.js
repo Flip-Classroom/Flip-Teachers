@@ -77,12 +77,6 @@ function Note_share() {
   setShelf2(false);
   setShelf3(false);
 
-  if (typeof document != "undefined") {
-    document.getElementById("ns_main_con").addEventListener("keyup", (e) => {
-      e.key === "Enter" ? share_note() : null;
-    });
-  }
-
   return (
     <div
       id="ns_main_con"

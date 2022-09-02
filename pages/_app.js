@@ -5,8 +5,10 @@ import "../styles/globals.css";
 import { ApolloProvider } from "@apollo/client";
 import apolloClient from "../lib/apolloClient";
 import { Authcontextprovider } from "../components/contexts/authcontext";
+import { useRouter } from "next/router";
 
 function MyApp({ Component, pageProps }) {
+  const router = useRouter();
   return (
     <>
       <Head>
@@ -25,15 +27,23 @@ function MyApp({ Component, pageProps }) {
           rel="stylesheet"
         />
       </Head>
-      <ApolloProvider client={apolloClient}>
-        <Authcontextprovider>
+
+      {router.pathname.startsWith("/auth") && (
+        <ApolloProvider client={apolloClient}>
+          <Authcontextprovider>
+            <Component {...pageProps} />
+          </Authcontextprovider>
+        </ApolloProvider>
+      )}
+      {!router.pathname.startsWith("/auth") && (
+        <ApolloProvider client={apolloClient}>
           <Teachercontextprovider>
             <Layout>
               <Component {...pageProps} />
             </Layout>
           </Teachercontextprovider>
-        </Authcontextprovider>
-      </ApolloProvider>
+        </ApolloProvider>
+      )}
     </>
   );
 }
