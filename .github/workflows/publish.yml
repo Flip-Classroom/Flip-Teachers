@@ -12,7 +12,7 @@ on:
 jobs:
   quality: 
 
-    runs-on: ${{ matrixx.os }}
+    runs-on: ${{ matrix.os }}
     
     
     strategy:
